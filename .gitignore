@@ -6,7 +6,15 @@ __pycache__/
 # C extensions
 *.so
 
+# Virtual Environment
+bin/
+include/
+lib/
+lib64
+pyvenv.cfg
+
 # Distribution / packaging
+pip-selfcheck.json
 .Python
 build/
 develop-eggs/
