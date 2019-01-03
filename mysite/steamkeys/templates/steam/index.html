@@ -1,0 +1,42 @@
+{% load templatehelpers %}
+<table>
+    <tr>
+        <th align="left"><a href="{% if order == 'id' %}{% relative_url '-id' 'order' params %}{% else %}{% relative_url 'id' 'order' params %}{% endif %}">Id</a>{% if order == 'id' %}^{% elif order == '-id' %}v{% endif %}</td>
+        <th></th>
+        <th align="left"><a href="{% if order == 'name' %}{% relative_url '-name' 'order' params %}{% else %}{% relative_url 'name' 'order' params %}{% endif %}">Title</a>{% if order == 'name' %}^{% elif order == '-name' %}v{% endif %}</td>
+        <th align="left"><a href="{% if order == 'bundle_name' %}{% relative_url '-bundle_name' 'order' params %}{% else %}{% relative_url 'bundle_name' 'order' params %}{% endif %}">Bundle</a>{% if order == 'bundle_name' %}^{% elif order == '-bundle_name' %}v{% endif %}</td>
+        <th align="left"><a href="{% if order == 'purchase_date' %}{% relative_url '-purchase_date' 'order' params %}{% else %}{% relative_url 'purchase_date' 'order' params %}{% endif %}">Purchased</a>{% if order == 'purchase_date' %}^{% elif order == '-purchase_date' %}v{% endif %}</td>
+    </tr>
+{% for row in rows %}
+    <tr>
+        <td>{{ row.id }}</td>
+        <td>{% if row.isAvailable %}*{% endif %}</td>
+        <td>{{ row.name }}</td>
+        <td>{{ row.bundle_name }}</td>
+        <td>{{ row.purchase_date }}</td>
+    </tr>
+{% endfor %}
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if rows.has_previous %}
+            <a href="{% relative_url 1 'page' request.GET.urlencode %}">&laquo; first</a>
+            <a href="{% relative_url rows.previous_page_number 'page' request.GET.urlencode %}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ rows.number }} of {{ rows.paginator.num_pages }}.
+        </span>
+
+        {% if rows.has_next %}
+            <a href="{% relative_url rows.next_page_number 'page' request.GET.urlencode %}">next</a>
+            <a href="{% relative_url rows.paginator.num_pages 'page' request.GET.urlencode %}">last &raquo;</a>
+        {% endif %}
+    </span>
+    <select id="per_page" name="per_page" onchange="if (this.value) window.location.href=this.value">
+        {% for limit in page_sizes %}
+        <option value="{% relative_url limit 'per_page' request.GET.urlencode %}"{% if per_page == limit %} selected{% endif %}>{{ limit }}</option>
+        {% endfor %}
+    </select>
+</div>

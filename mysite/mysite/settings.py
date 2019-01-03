@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['192.168.250.1']
 
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
+    'steamkeys.apps.SteamkeysConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
